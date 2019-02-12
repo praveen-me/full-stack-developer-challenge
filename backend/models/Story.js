@@ -3,17 +3,14 @@ const mongoose = require('mongoose');
 const { ObjectId } = mongoose.Schema.Types;
 
 const storySchema = new mongoose.Schema({
-  user: { type: ObjectId, ref: 'User' },
-  title: String,
-  description: String,
-  cover: { type: String, default: '' },
+  userId: { type: ObjectId, ref: 'User' },
+  description: {type :String},
+  published: {type: Boolean},
   date: { type: Date, default: new Date() },
-  claps: { type: Number, default: 0 },
   userClapped: [{
-    userId: ObjectId,
-    claps: { type: Number, default: 0, max: 50 },
+    userId: {type : ObjectId}
   }],
-  userName: String,
+  username: {type : String},
 });
 
 const Story = mongoose.model('Story', storySchema);

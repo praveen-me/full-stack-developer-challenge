@@ -1,41 +1,26 @@
 const Story = require('./../models/Story');
 const User = require('./../models/User');
+// Story.find({userId : story.userId}, (err, stories) => {
+// });
 
 module.exports = {
   addStory: (req, res) => {
-    const story = req.body;
-    // const imageURL = req.body.cover;
-
-    // fs.readFile(imageURL, (err, data) => {
-    //   // let extensionName = path.extname(`${process.cwd()}/pics/demopic.png`);
-
-    //   let base64Image = new Buffer(data, 'binary').toString('base64');
-    //   // let imgSrcString = `dat:image/${extensionName.split('.').pop()};base64,${base64Image}`;
-    //   res.send(base64Image);
-    // });
-
-    // res.wri
-    // if(req.user) {
-    //   User.findOne({_id: req.user._id}, {password: 0}, (err, data) => {
-    //     if(err) throw err;
-    //     return res.json({
-    //       data: data
-    //     })
-    //   })
-    // }
-
+    const storyData = req.body;
+    
     const newStory = Story({
-      ...story,
-      user: req.user._id,
-      userName: req.user.fullName,
+      ...storyData,
     });
 
-    newStory.save((err, data) => {
+    newStory.save((err, story) => {
       if (err) throw err;
-      res.json({
-        data,
-      });
-    });
+      console.log(story)
+      User.findOneAndUpdate({_id: story.userId}, { $push : { stories : story._id } }, { upsert: true }, (err, user) => {
+        res.json({
+          user
+        })
+      })
+      
+    })
   },
   getAllStories: (req, res) => {
     Story.find({}, (err, data) => {

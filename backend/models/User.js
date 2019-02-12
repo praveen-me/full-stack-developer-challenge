@@ -13,6 +13,7 @@ const userSchema = new mongoose.Schema({
 // schema method for decrypt password and compare with the original one
 userSchema.methods.verifyPassword = function (userPassword, cb) {
   // for userpassword === hash
+  console.log(userPassword,'password')
   bcrypt.compare(userPassword, this.password, function (err, res) {
     if (err) return cb(err, false);
     return cb (null, res);

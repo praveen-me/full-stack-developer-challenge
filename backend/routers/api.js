@@ -13,6 +13,8 @@ router.post('/signup', user.signUp);
 
 router.post('/login', user.logIn);
 
+router.post('/stories', story.addStory);
+
 // router.get('/isLoggedIn', user.isLoggedIn);
 
 // router.get('/logOut', user.logout);

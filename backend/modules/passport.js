@@ -15,6 +15,7 @@ module.exports = (passport) => {
           return done(null, false);
         }
         return user.verifyPassword(password, (err, isMatched) => {
+          console.log(isMatched)
           if (!isMatched) {
             return done(null, false);
           }
