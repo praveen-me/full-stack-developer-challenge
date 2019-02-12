@@ -1,19 +1,21 @@
 /*
- * This middleware the checks wheather the user session is
- * expired or not. If expired returned from their
- * if not go to the next function.
+ * This middleware the users jwt is valid or not. 
+ * If it's not valid returned from their if not go to the next function.
 */
 
-const passport = require('passport');
+const jsonwebtoken = require('jsonwebtoken');
 
 module.exports = {
   isLoggedIn: (req, res, next) => {
-    
-    // if (!req.user) {
-    //   return res.status(401).json({
-    //     msg: 'You are not loggedIn. Please Log In',
-    //   });
-    // }
-    return next();
+    const token = req.headers['authorization'].slice(7);
+    jsonwebtoken.verify(token, 'secret', (err, decoded) => {
+      if(decoded._doc._id) {
+        next();
+      } else {
+        res.status(401).json({
+          msg: 'Please log in again'
+        })
+      }
+    });
   },
 };

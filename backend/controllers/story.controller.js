@@ -1,7 +1,5 @@
 const Story = require('./../models/Story');
 const User = require('./../models/User');
-// Story.find({userId : story.userId}, (err, stories) => {
-// });
 
 module.exports = {
   addStory: (req, res) => {
@@ -12,7 +10,6 @@ module.exports = {
 
     newStory.save((err, story) => {
       if (err) throw err;
-      console.log(story)
       User.findOneAndUpdate({_id: story.userId}, { $push : { stories : story._id } }, { upsert: true }, (err, user) => {
         res.status(201).json({
           story
@@ -62,7 +59,6 @@ module.exports = {
     })
   },
   updateStory: (req, res) => {
-    console.log(req.query)
     const {storyId} = req.params;
     switch(req.query.mode) {
       case 'edit' : {
@@ -80,44 +76,11 @@ module.exports = {
             story
           })
         })
+      }
+      break;
+      case 'clap': {
+
       } 
     }
-  },
-  setClaps: (req, res) => {
-    const { storyId } = req.params;
-    const clapsData = req.body;
-    Story.findById(storyId, (err, data) => {
-      const clappedUserIndex = '';
-      // var isUserClapped = false;
-
-      data.claps += clapsData.claps;
-      // isUserClapped = data.userClapped.some((user,i) => {
-      //   if(user.userId === clapsData.userId) {
-      //     clappedUserIndex = i;
-      //   }
-      // })
-
-      const isUserClapped = data.userClapped.filter((user,i) => user.userId === `ObjectId("${clapsData.userId}")`)
-
-
-      console.log(req.body)
-      console.log(isUserClapped);
-
-      // if(isUserClapped && clappedUserIndex) {
-      //   data.userClapped[clappedUserIndex].claps += clapsData.claps
-      // } else {
-      //   data.userClapped.push({
-      //     userId: clapsData.userId,
-      //     claps: clapsData.claps
-      //   })
-      // }
-      // console.log(data)
-      // data.save();
-
-      res.json({
-        data
-      })
-
-    })
   },
 };

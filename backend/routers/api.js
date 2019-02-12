@@ -13,15 +13,15 @@ router.post('/signup', user.signUp);
 
 router.post('/login', user.logIn);
 
-router.post('/users/:id/stories', story.addStory);
+router.post('/users/:id/stories', auth.isLoggedIn, story.addStory);
 
-router.get('/users/:id/stories',story.getUserStories)
+router.get('/users/:id/stories', auth.isLoggedIn, story.getUserStories)
 
-router.delete('/users/:id/stories/:storyId',story.deleteStory)
+router.delete('/users/:id/stories/:storyId', auth.isLoggedIn, story.deleteStory)
 
-router.get('/stories', story.getAllStories);
+router.get('/stories', auth.isLoggedIn, story.getAllStories);
 
-router.put('/users/:id/stories/:storyId',story.updateStory);
+router.put('/users/:id/stories/:storyId', auth.isLoggedIn, story.updateStory);
 
 // waking up api's
 router.get('/wakeup', (req, res) => {

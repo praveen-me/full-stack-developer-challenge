@@ -2,9 +2,6 @@ import {CREATE_STORY, GET_USER_STORIES, DELETE_STORY, GET_ALL_STORIES, EDIT_STOR
 import store from './../store';
 const URI = 'http://localhost:3001/api';
 
-// TODO:
-// 1 - Add story then data according to callback
-// 2 - Handle action in reducer 
 
 const storyActions = {
   addStory(storyData, cb) {
@@ -12,7 +9,8 @@ const storyActions = {
       fetch(`${URI}/users/${storyData.userId}/stories`, {
         method: 'POST',
         headers: {
-          'content-type': 'application/json'
+          'content-type': 'application/json',
+          'Authorization': `Bearer ${store.getState().auth.token}`
         },
         body: JSON.stringify(storyData)
       })
@@ -30,7 +28,7 @@ const storyActions = {
     return dispatch => {
       fetch(`${URI}/users/${id}/stories`, {
         headers: {
-          'Authorization': `Bearer`
+          'Authorization': `Bearer ${store.getState().auth.token}`
         }
       })
         .then(res => {
@@ -51,6 +49,9 @@ const storyActions = {
   deleteStory(id, cb) {
     return dispatch => fetch(`${URI}/users/${store.getState().auth.user._id}/stories/${id}`, {
       method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${store.getState().auth.token}`
+      }
     })
       .then(res => {
         if(res.status === 200) {
@@ -67,7 +68,11 @@ const storyActions = {
   },
   getAllStories(cb) {
     return dispatch => {
-      fetch(`${URI}/stories`)
+      fetch(`${URI}/stories`, {
+        headers : {
+          'Authorization': `Bearer ${store.getState().auth.token}`
+        }
+      })
         .then(res => res.json())
         .then(data => {
           dispatch({
@@ -83,7 +88,8 @@ const storyActions = {
       fetch(`${URI}/users/${userId}/stories/${id}?mode=edit`, {
         method: 'PUT',
         headers: {
-          'content-type': 'application/json'
+          'content-type': 'application/json',
+          'Authorization': `Bearer ${store.getState().auth.token}`
         },
         body: JSON.stringify({description})
       })
@@ -102,7 +108,8 @@ const storyActions = {
       fetch(`${URI}/users/${userId}/stories/${id}?mode=publish`, {
         method: 'PUT',
         headers: {
-          'content-type': 'application/json'
+          'content-type': 'application/json',
+          'Authorization': `Bearer ${store.getState().auth.token}`
         }
       })
         .then(res => {

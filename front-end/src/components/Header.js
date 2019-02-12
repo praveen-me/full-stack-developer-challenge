@@ -6,7 +6,7 @@ import {connect} from 'react-redux';
 
 class Header extends Component {
   render() {
-    const {token, user} = this.props.auth;
+    const {token} = this.props.auth;
     
     return (
       <div>
@@ -14,12 +14,12 @@ class Header extends Component {
         {
           !token ? (
             <>
-              <Link to="/login">Login</Link>
+              <Link to="/login">Login</Link><br />
               <Link to="/signup">Signup</Link>
             </>
           ): (
             <>
-              <Link to={`/profile/drafts/create`}>Create</Link>
+              <Link to={`/profile/drafts/create`}>Create</Link><br />
               <Link to={`/profile`}>Profile</Link>
             </>
           )
