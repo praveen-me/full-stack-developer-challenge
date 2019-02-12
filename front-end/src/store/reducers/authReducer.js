@@ -1,15 +1,21 @@
-import { SIGN_UP } from "../actions/types";
+import { SIGN_UP, LOG_IN } from "../actions/types";
 
 const initState = {
-  userData: {}
-}
+};
 
 export function authReducer(state = initState, action) {
   switch(action.type) {
     case SIGN_UP: return state;
-    
+  
+    case LOG_IN: {
+      const {userData} = action;
+      return {
+        ...state,
+        ...userData
+      }
+    }
+
     default: return state;
   }
 }
-
 

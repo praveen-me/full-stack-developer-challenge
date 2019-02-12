@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 // import {logIn} from '../../store/actions/authActions';
 import {Redirect} from 'react-router-dom';
+import authActions from '../../store/actions/authAction';
 // import Loader from '../project/LoStoriesader';
 
 class LogIn extends Component {
@@ -34,26 +35,28 @@ class LogIn extends Component {
     this.setState({
       isLoading : true
     })
-    // if(navigator.onLine) {
-    //   this.props.dispatch(logIn(this.state.userInfo, (isSucced) => {
-    //     if(isSucced === true) {
-    //       this.setState({
-    //         isLoading : false,
-    //         msg : ''
-    //       })
-    //     } else if(isSucced.msg) {
-    //       this.setState({
-    //         isLoading: false,
-    //         msg: data.msg,
-    //       }); 
-    //     }
-    //   }))
-    // } else {
-    //   this.setState({
-    //     isLoading : false,
-    //     msg : "Please connected to a secure connection."        
-    //   })
-    // }
+    if(navigator.onLine) {
+      this.props.dispatch(authActions.logIn(this.state.userInfo, (userStatus) => {
+        if(userStatus) {
+          this.setState({
+            isLoading : false,
+            msg : ''
+          })
+          this.props.history.push('/');
+        } 
+        // else if(isSucced.msg) {
+        //   this.setState({
+        //     isLoading: false,
+        //     msg: data.msg,
+        //   }); 
+        // }
+      }))
+    } else {
+      this.setState({
+        isLoading : false,
+        msg : "Please connected to a secure connection."        
+      })
+    }
   }
   
   render() {

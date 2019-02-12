@@ -13,7 +13,9 @@ router.post('/signup', user.signUp);
 
 router.post('/login', user.logIn);
 
-router.post('/stories', story.addStory);
+router.post('/users/:id/stories', story.addStory);
+
+router.get('/users/:id/stories', story.getUserStories)
 
 // router.get('/isLoggedIn', user.isLoggedIn);
 

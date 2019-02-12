@@ -6,7 +6,6 @@ const User = require('./../models/User');
 module.exports = {
   addStory: (req, res) => {
     const storyData = req.body;
-    
     const newStory = Story({
       ...storyData,
     });
@@ -15,11 +14,10 @@ module.exports = {
       if (err) throw err;
       console.log(story)
       User.findOneAndUpdate({_id: story.userId}, { $push : { stories : story._id } }, { upsert: true }, (err, user) => {
-        res.json({
-          user
+        res.status(201).json({
+          story
         })
       })
-      
     })
   },
   getAllStories: (req, res) => {
@@ -39,20 +37,11 @@ module.exports = {
       });
     });
   },
-  getStoriesForSingleUser: (req, res) => {
-    const { username } = req.params;
-    User.findOne({ username }, (err, userData) => {
-      if (err) throw err;
-      Story.find({ user: userData._id }, (err, data) => {
-        if (!data.length) {
-          res.status(302).json({
-            msg: "You don't have any article."
-          });
-        } else {
-          res.json({
-            userStories: data,
-          });
-        }
+  getUserStories: (req, res) => {
+    const { id } = req.params;
+    Story.find({ userId: id }, (err, data) => {
+      res.status(302).json({
+        stories: data,
       });
     });
   },

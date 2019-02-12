@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import {Redirect} from 'react-router-dom';
+import {connect} from 'react-redux';
+import { stat } from 'fs';
 
 class Stories extends Component {
   constructor(props) {
@@ -10,8 +12,9 @@ class Stories extends Component {
   }
   
   render() {
-    const {jwt} = this.state;
-    if(!jwt) return <Redirect to='login'/>
+    const {token} = this.props.auth;
+    console.log(this.props.auth)
+    if(!token) return <Redirect to='login'/>
 
     return (
       <div>
@@ -21,4 +24,11 @@ class Stories extends Component {
   }
 }
 
-export default Stories;
+function mapStateToProps(state) {
+  const {auth} = state;
+  return {
+    auth
+  }
+}
+
+export default connect(mapStateToProps)(Stories);

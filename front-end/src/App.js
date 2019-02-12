@@ -4,6 +4,8 @@ import Header from './components/Header';
 import Stories from './components/Stories';
 import Login from './components/auth/Login';
 import SignUp from './components/auth/SignUp';
+import CreateStory from './components/story/CreateStory';
+import Profile from './components/Profile';
 
 
 class App extends Component {
@@ -16,6 +18,8 @@ class App extends Component {
             <Route path='/' exact component={Stories} />
             <Route path='/login' component={Login} />
             <Route path='/signup' component={SignUp} />
+            <Route path='/profile/drafts/create' component={CreateStory}/>
+            <Route path='/profile' component={Profile}/>
           </Switch>
         </>
       </BrowserRouter>
