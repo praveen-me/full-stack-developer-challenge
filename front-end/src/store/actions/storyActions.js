@@ -79,9 +79,8 @@ const storyActions = {
     } 
   },
   editStory({description, id, userId}, cb) {
-    console.log(description, id, userId)
     return dispatch => {
-      fetch(`${URI}/users/${userId}/stories/${id}`, {
+      fetch(`${URI}/users/${userId}/stories/${id}?mode=edit`, {
         method: 'PUT',
         headers: {
           'content-type': 'application/json'
@@ -90,10 +89,28 @@ const storyActions = {
       })
         .then(res => {
           if(res.status === 200) {
-              dispatch({
-                type: EDIT_STORY
-              })     
-              cb(true)
+            dispatch({
+              type: EDIT_STORY  
+            })     
+            cb(true)
+          }
+        })
+    }
+  },
+  publishStory({userId, id}, cb) {
+    return dispatch => {
+      fetch(`${URI}/users/${userId}/stories/${id}?mode=publish`, {
+        method: 'PUT',
+        headers: {
+          'content-type': 'application/json'
+        }
+      })
+        .then(res => {
+          if(res.status === 200) {
+            dispatch({
+              type: EDIT_STORY  
+            })     
+            cb(true)
           }
         })
     }

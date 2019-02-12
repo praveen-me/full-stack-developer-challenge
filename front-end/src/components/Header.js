@@ -10,7 +10,7 @@ class Header extends Component {
     
     return (
       <div>
-        This is header  
+        <h1><Link to='/'>Inkredo Task</Link></h1>  
         {
           !token ? (
             <>

@@ -11,3 +11,5 @@ export const DELETE_STORY = 'DELETE_STORY';
 export const GET_ALL_STORIES = 'GET_ALL_STORIES';
 
 export const EDIT_STORY = 'EDIT_STORY';
+
+export const PUBLISH_ARTICLE = 'PUBLISH_ARTICLE';

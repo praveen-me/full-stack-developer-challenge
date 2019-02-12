@@ -62,13 +62,26 @@ module.exports = {
     })
   },
   updateStory: (req, res) => {
+    console.log(req.query)
     const {storyId} = req.params;
-    const {description} = req.body;
-    Story.findOneAndUpdate({_id : storyId}, {$set: { description }}, (err, story) => {
-      res.status(200).json({
-        story
-      })
-    })
+    switch(req.query.mode) {
+      case 'edit' : {
+        const {description} = req.body;
+        Story.findOneAndUpdate({_id : storyId}, {$set: { description }}, (err, story) => {
+          res.status(200).json({
+            story
+          })
+        })
+      }
+      break;
+      case 'publish': {
+        Story.findOneAndUpdate({_id : storyId}, {$set: { published: true }}, (err, story) => {
+          res.status(200).json({
+            story
+          })
+        })
+      } 
+    }
   },
   setClaps: (req, res) => {
     const { storyId } = req.params;

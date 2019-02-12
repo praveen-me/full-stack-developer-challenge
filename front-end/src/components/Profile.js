@@ -41,6 +41,24 @@ class Profile extends Component {
     }))
   }
 
+  handlePublish = e => {
+    const {id} = e.target.parentElement;
+    this.setState({
+      isLoading :true
+    })
+    this.props.dispatch(storyActions.publishStory(
+      {
+        userId : this.props.auth.user._id,
+        id
+      },
+      (publishedStatus) => {
+        if(publishedStatus) {
+          this.getStories();
+        }
+      }
+    ))
+  }
+
   render() {
     const {auth, stories} = this.props;
     const {isLoading} = this.state;
@@ -71,10 +89,8 @@ class Profile extends Component {
                 <button>
                   <Link to={`/edit/${story._id}`}>Edit</Link>
                 </button>
-                <div>
-                  <button onClick={this.handleDelete}>Delete</button>
-                  <button onClick={this.handleDelete}>Publish Draft</button>
-                </div>
+                <button onClick={this.handlePublish}>Publish Draft</button>
+                <button onClick={this.handleDelete}>Delete</button>
               </div>
             ))
           )
