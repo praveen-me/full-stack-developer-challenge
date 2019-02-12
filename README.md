@@ -22,7 +22,9 @@ Design a web application that allows authors to publish stories.
 * Clone the repo using `git clone https://github.com/praveen-me/full-stack-developer-challenge.git`.
 * Go to the directory by running `cd full-stack-developer-challenge`.
 * Go to front-end folder and run `cd front-end && npm i && npm start`.
+* Front-end port in `http://localhost:3000`.
 * Go to backend folder and run `cd backend && npm i && npm start`.
+* Backend port in `http://localhost:3001`.
 
 ### Tech Stack Used
 * React 
