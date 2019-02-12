@@ -9,7 +9,7 @@ module.exports = {
   isLoggedIn: (req, res, next) => {
     const token = req.headers['authorization'].slice(7);
     jsonwebtoken.verify(token, 'secret', (err, decoded) => {
-      if(decoded._doc._id) {
+      if(decoded._doc) {
         next();
       } else {
         res.status(401).json({
