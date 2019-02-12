@@ -3,14 +3,6 @@ const User = require('./../models/User');
 
 // contains all the middleware that passport need
 module.exports = (passport) => {
-  passport.serializeUser((user, done) => {
-    done(null, user._id);
-  });
-  passport.deserializeUser((_id, done) => {
-    User.findById(_id, (err, user) => {
-      done(err, user);
-    });
-  });
   /*
    * passport local strategy takes username and password
    * compare with the user's document in db
@@ -26,7 +18,9 @@ module.exports = (passport) => {
           if (!isMatched) {
             return done(null, false);
           }
-          return done(null, user);
+          User.findOne({_id : user._id}, {password : 0}, (err, userData) => {
+            return done(null, userData);
+          })
         });
       });
     },

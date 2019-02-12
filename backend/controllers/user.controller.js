@@ -1,6 +1,7 @@
 const passport = require('passport');
 const mongoose = require('mongoose');
 const User = require('./../models/User');
+const jsonwebtoken = require('jsonwebtoken');
 
 module.exports = {
   signUp: (req, res) => {
@@ -30,19 +31,16 @@ module.exports = {
   },
   logIn: (req, res, next) => {
     passport.authenticate('local', (err, user) => {
-      if (err) { return next(err); }
-      if (!user) {
-        return res.status(404).json({
-          msg: 'Invalid user creadentials. Please try again.',
+      if (!user || err) {
+        return res.status(401).json({
+          msg: 'Invalid user credentials. Please try again.',
         });
       }
-      return req.logIn(user, (err) => {
+      return req.logIn(user, {session : false}, (err) => {
         if (err) { return next(err); }
-        return User.findOne({_id: user._id}, { password: 0 }, (err, data) => {
-          if (err) throw err;
-          return res.json({
-            data,
-          });
+        return res.status(200).json({
+          user,
+          token: jsonwebtoken.sign({...user}, 'secret')
         });
       });
     })(req, res, next);
