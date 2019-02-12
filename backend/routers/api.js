@@ -19,14 +19,9 @@ router.get('/users/:id/stories',story.getUserStories)
 
 router.delete('/users/:id/stories/:storyId',story.deleteStory)
 
-// router.get('/isLoggedIn', user.isLoggedIn);
+router.get('/stories', story.getAllStories);
 
-// router.get('/logOut', user.logout);
-
-// router.get('/:username/stories', auth.isLoggedIn, story.getStoriesForSingleUser);
-
-// router.post('/stories/:storyId/clap', auth.isLoggedIn, story.setClaps);
-
+router.put('/users/:id/stories/:storyId',story.updateStory);
 
 // waking up api's
 router.get('/wakeup', (req, res) => {

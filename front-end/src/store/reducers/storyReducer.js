@@ -1,4 +1,4 @@
-import { GET_USER_STORIES } from "../actions/types";
+import { GET_USER_STORIES, GET_ALL_STORIES } from "../actions/types";
 
 const initState = []
 
@@ -7,6 +7,9 @@ export default function storyReducer(state = initState, action) {
     case GET_USER_STORIES: {
       return action.stories
     } 
+    case GET_ALL_STORIES: {
+      return action.stories
+    }
     default : return state;
   }
 }

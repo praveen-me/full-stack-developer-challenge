@@ -1,4 +1,4 @@
-import {CREATE_STORY, GET_USER_STORIES, DELETE_STORY} from './types';
+import {CREATE_STORY, GET_USER_STORIES, DELETE_STORY, GET_ALL_STORIES, EDIT_STORY} from './types';
 import store from './../store';
 const URI = 'http://localhost:3001/api';
 
@@ -64,7 +64,40 @@ const storyActions = {
           })
         }
       })
-  }
+  },
+  getAllStories(cb) {
+    return dispatch => {
+      fetch(`${URI}/stories`)
+        .then(res => res.json())
+        .then(data => {
+          dispatch({
+            type: GET_ALL_STORIES,
+            stories: data.stories
+          })
+          cb(true)
+        })
+    } 
+  },
+  editStory({description, id, userId}, cb) {
+    console.log(description, id, userId)
+    return dispatch => {
+      fetch(`${URI}/users/${userId}/stories/${id}`, {
+        method: 'PUT',
+        headers: {
+          'content-type': 'application/json'
+        },
+        body: JSON.stringify({description})
+      })
+        .then(res => {
+          if(res.status === 200) {
+              dispatch({
+                type: EDIT_STORY
+              })     
+              cb(true)
+          }
+        })
+    }
+  } 
 }
 
 export default storyActions;

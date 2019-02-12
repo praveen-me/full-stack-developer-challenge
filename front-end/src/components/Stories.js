@@ -1,33 +1,56 @@
 import React, { Component } from 'react';
-import {Redirect} from 'react-router-dom';
+import {Redirect, Link} from 'react-router-dom';
 import {connect} from 'react-redux';
-import { stat } from 'fs';
+import storyActions from '../store/actions/storyActions';
 
 class Stories extends Component {
   constructor(props) {
     super(props);
     this.state= {
-      jwt: ''
+      isLoading: true
     }
+  }
+
+  componentDidMount() {
+    this.props.dispatch(storyActions.getAllStories((storiesStatus) => {
+      if(storiesStatus) {
+        this.setState({
+          isLoading: false
+        })
+      }
+    }))
   }
   
   render() {
-    const {token} = this.props.auth;
-    console.log(this.props.auth)
-    if(!token) return <Redirect to='login'/>
+    const {auth, stories} = this.props;
+    const {isLoading} = this.state;
+    console.log(stories)
+    if(!auth.token) return <Redirect to='login'/>
 
     return (
       <div>
-        Stories Display here
+        <h2> Stories</h2>
+        {
+          isLoading ? <p>Loading...</p> : (
+            stories && stories.map((story, i) => (
+              <div key={story._id}>
+                {i+1}. <Link to="#">{story.description}</Link>
+                <p>user - {story.username} claps - {story.userClapped.length}</p>
+                <p><button>Clap</button></p>
+              </div>
+            ))
+          )
+        }
       </div>
     );
   }
 }
 
 function mapStateToProps(state) {
-  const {auth} = state;
+  const {auth, stories} = state;
   return {
-    auth
+    auth,
+    stories,
   }
 }
 

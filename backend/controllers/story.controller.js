@@ -53,7 +53,22 @@ module.exports = {
         msg: 'deleted'
       })
     })
-
+  },
+  getAllStories: (req, res) => {
+    Story.find({published: true}, (err, stories) => {
+      return res.status(302).json({
+        stories 
+      })
+    })
+  },
+  updateStory: (req, res) => {
+    const {storyId} = req.params;
+    const {description} = req.body;
+    Story.findOneAndUpdate({_id : storyId}, {$set: { description }}, (err, story) => {
+      res.status(200).json({
+        story
+      })
+    })
   },
   setClaps: (req, res) => {
     const { storyId } = req.params;

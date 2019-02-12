@@ -20,6 +20,7 @@ class App extends Component {
             <Route path='/signup' component={SignUp} />
             <Route path='/profile/drafts/create' component={CreateStory}/>
             <Route path='/profile' component={Profile}/>
+            <Route path='/edit/:id' component={CreateStory}/>
           </Switch>
         </>
       </BrowserRouter>

@@ -68,7 +68,13 @@ class Profile extends Component {
             drafts.map((story, i) => (
               <div key={story._id} id={story._id}>
                 {i+ 1}. <Link to={`/stories/${story._id}`}>{story.description}</Link>
-                <button onClick={this.handleDelete}>Delete</button>
+                <button>
+                  <Link to={`/edit/${story._id}`}>Edit</Link>
+                </button>
+                <div>
+                  <button onClick={this.handleDelete}>Delete</button>
+                  <button onClick={this.handleDelete}>Publish Draft</button>
+                </div>
               </div>
             ))
           )
