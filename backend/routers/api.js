@@ -15,7 +15,9 @@ router.post('/login', user.logIn);
 
 router.post('/users/:id/stories', story.addStory);
 
-router.get('/users/:id/stories', story.getUserStories)
+router.get('/users/:id/stories',story.getUserStories)
+
+router.delete('/users/:id/stories/:storyId',story.deleteStory)
 
 // router.get('/isLoggedIn', user.isLoggedIn);
 

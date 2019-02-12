@@ -31,7 +31,6 @@ module.exports = {
   },
   logIn: (req, res, next) => {
     passport.authenticate('local', (err, user) => {
-      console.log(user);
       if (!user || err) {
         return res.status(401).json({
           msg: 'Invalid user credentials. Please try again.',

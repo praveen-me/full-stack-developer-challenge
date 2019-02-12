@@ -45,6 +45,16 @@ module.exports = {
       });
     });
   },
+  deleteStory: (req, res) => {
+    const {storyId} = req.params;
+
+    Story.deleteOne({_id : storyId}, (err, done) =>{
+      return res.status(200).json({
+        msg: 'deleted'
+      })
+    })
+
+  },
   setClaps: (req, res) => {
     const { storyId } = req.params;
     const clapsData = req.body;

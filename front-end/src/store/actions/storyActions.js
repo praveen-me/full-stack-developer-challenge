@@ -1,4 +1,5 @@
-import {CREATE_STORY, GET_USER_STORIES} from './types';
+import {CREATE_STORY, GET_USER_STORIES, DELETE_STORY} from './types';
+import store from './../store';
 const URI = 'http://localhost:3001/api';
 
 // TODO:
@@ -27,7 +28,11 @@ const storyActions = {
   },
   getUserStories(id, cb) {
     return dispatch => {
-      fetch(`${URI}/users/${id}/stories`)
+      fetch(`${URI}/users/${id}/stories`, {
+        headers: {
+          'Authorization': `Bearer`
+        }
+      })
         .then(res => {
           if(res.status === 302) {
             res.json()
@@ -42,6 +47,23 @@ const storyActions = {
           }
         })
     }  
+  },
+  deleteStory(id, cb) {
+    return dispatch => fetch(`${URI}/users/${store.getState().auth.user._id}/stories/${id}`, {
+      method: 'DELETE',
+    })
+      .then(res => {
+        if(res.status === 200) {
+          res.json()
+          .then(data => {
+            console.log(data, 'user stories')
+            dispatch({
+              type: DELETE_STORY
+            })     
+            cb(true)
+          })
+        }
+      })
   }
 }
 

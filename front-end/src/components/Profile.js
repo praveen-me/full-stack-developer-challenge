@@ -14,14 +14,31 @@ class Profile extends Component {
   componentDidMount() {
     const {auth} = this.props;
     if(auth.user) {
-      this.props.dispatch(storyActions.getUserStories(auth.user._id, (dataStatus) => {
-        if(dataStatus) {
-          this.setState({
-            isLoading: false
-          })
-        }
-      }))
+      this.getStories()
     } 
+  }
+
+  getStories = () => {
+    const {auth} = this.props;
+    this.props.dispatch(storyActions.getUserStories(auth.user._id, (dataStatus) => {
+      if(dataStatus) {
+        this.setState({
+          isLoading: false
+        })
+      }
+    }))
+  }
+
+  handleDelete = e => {
+    const {id} = e.target.parentElement;
+    this.setState({
+      isLoading: true
+    })
+    this.props.dispatch(storyActions.deleteStory(id, (deleteStatus) => {
+      if(deleteStatus) {
+        this.getStories();
+      }
+    }))
   }
 
   render() {
@@ -38,9 +55,9 @@ class Profile extends Component {
         {
           isLoading ? <p>Loading...</p> : (
             publishedStories.map((story, i) => (
-              <div>
+              <div key={story._id} id={story._id}>
                 {i+ 1}. <Link to={`/stories/${story._id}`}>{story.description}</Link>
-                <button>Delete</button>
+                <button onClick={this.handleDelete}>Delete</button>
               </div>
             ))
           )
@@ -49,9 +66,9 @@ class Profile extends Component {
         {
           isLoading ? <p>Loading...</p> : (
             drafts.map((story, i) => (
-              <div>
+              <div key={story._id} id={story._id}>
                 {i+ 1}. <Link to={`/stories/${story._id}`}>{story.description}</Link>
-                <button>Delete</button>
+                <button onClick={this.handleDelete}>Delete</button>
               </div>
             ))
           )
