@@ -74,18 +74,18 @@ class Profile extends Component {
           isLoading ? <p>Loading...</p> : (
             publishedStories.map((story, i) => (
               <div key={story._id} id={story._id}>
-                {i+ 1}. <Link to={`/stories/${story._id}`}>{story.description}</Link>
+                <p> {i+ 1}. {story.description}</p>
                 <button onClick={this.handleDelete}>Delete</button>
               </div>
             ))
           )
         }
-        <h3>Drafts</h3>
+        <h3>All Drafts </h3>
         {
           isLoading ? <p>Loading...</p> : (
             drafts.map((story, i) => (
               <div key={story._id} id={story._id}>
-                {i+ 1}. <Link to={`/stories/${story._id}`}>{story.description}</Link>
+                <p> {i+ 1}. {story.description}</p>
                 <button>
                   <Link to={`/edit/${story._id}`}>Edit</Link>
                 </button>

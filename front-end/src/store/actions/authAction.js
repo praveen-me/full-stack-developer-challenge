@@ -39,6 +39,8 @@ const authActions = {
             res.json()
               .then(userData => {
                 console.log(userData)
+                localStorage.setItem('token', userData.token)
+                
                 dispatch({
                   type: LOG_IN,
                   userData

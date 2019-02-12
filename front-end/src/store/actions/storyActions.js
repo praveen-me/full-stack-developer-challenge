@@ -4,13 +4,14 @@ const URI = 'http://localhost:3001/api';
 
 
 const storyActions = {
+  token: () => localStorage.getItem('token'),
   addStory(storyData, cb) {
     return dispatch => {
       fetch(`${URI}/users/${storyData.userId}/stories`, {
         method: 'POST',
         headers: {
           'content-type': 'application/json',
-          'Authorization': `Bearer ${store.getState().auth.token}`
+          'Authorization': `Bearer ${this.token()}`
         },
         body: JSON.stringify(storyData)
       })
@@ -28,7 +29,7 @@ const storyActions = {
     return dispatch => {
       fetch(`${URI}/users/${id}/stories`, {
         headers: {
-          'Authorization': `Bearer ${store.getState().auth.token}`
+          'Authorization': `Bearer ${this.token()}`
         }
       })
         .then(res => {
@@ -50,7 +51,7 @@ const storyActions = {
     return dispatch => fetch(`${URI}/users/${store.getState().auth.user._id}/stories/${id}`, {
       method: 'DELETE',
       headers: {
-        'Authorization': `Bearer ${store.getState().auth.token}`
+        'Authorization': `Bearer ${this.token()}`
       }
     })
       .then(res => {
@@ -66,11 +67,12 @@ const storyActions = {
         }
       })
   },
+  // jjkj
   getAllStories(cb) {
     return dispatch => {
       fetch(`${URI}/stories`, {
         headers : {
-          'Authorization': `Bearer ${store.getState().auth.token}`
+          'Authorization': `Bearer ${this.token()}`
         }
       })
         .then(res => res.json())
@@ -89,7 +91,7 @@ const storyActions = {
         method: 'PUT',
         headers: {
           'content-type': 'application/json',
-          'Authorization': `Bearer ${store.getState().auth.token}`
+          'Authorization': `Bearer ${this.token()}`
         },
         body: JSON.stringify({description})
       })
@@ -109,7 +111,7 @@ const storyActions = {
         method: 'PUT',
         headers: {
           'content-type': 'application/json',
-          'Authorization': `Bearer ${store.getState().auth.token}`
+          'Authorization': `Bearer ${this.token()}`
         }
       })
         .then(res => {
