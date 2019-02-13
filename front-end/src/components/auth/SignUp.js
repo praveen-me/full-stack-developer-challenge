@@ -41,44 +41,35 @@ class SignUp extends Component {
         });
         this.props.history.push('/login');
       }
-      // else if (isSucced.msg) {
-      //   this.setState({
-      //     isLoading : false,
-      //     msg : data.msg
-      //   })
-      // }
     }))
   }
   
-  // <AuthButton />        
   render() {
     const {msg, isLoading} = this.state;
     return (
-      // isLoading ? <Loader /> : (
-        <div className="auth-container wrapper middle">
+      isLoading ? <p>Loading...</p> : (
+        <div className="container">
+          <h2 className="center">Sign Up</h2>
           <form className="auth-form" onSubmit={this.handleSubmit}>
             <input type="text" 
             name="username"
             placeholder="Enter your username" 
             onChange={this.handleChange}
-            required/>
+            required/><br />
             <input type="email" 
             name="email" 
             placeholder="Enter your email" 
             onChange={this.handleChange}
-            required/>
+            required/><br />
             <input type="password" 
             name="password" 
             placeholder="Enter your password" 
             onChange={this.handleChange}
-            required/>
-            {
-              msg ? <p className="warning-box">{msg}</p> : ''
-            }
+            required/><br />
             <button type="submit" className="btn started-btn">Sign Up</button>
           </form>
         </div>
-      // )
+      )
     );
   }
 }

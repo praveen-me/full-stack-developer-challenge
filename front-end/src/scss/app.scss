@@ -15,6 +15,10 @@ a {
   text-decoration: none;
 }
 
+.center {
+  text-align: center;
+}
+
 .logo {
   font-size: 30px;
 }
@@ -27,4 +31,17 @@ header {
     justify-content: space-between;
     align-items: center;
   }
+}
+
+.filter-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 5rem;
+}
+
+.story-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  place-content: center;
+  grid-gap: 1rem;
 }

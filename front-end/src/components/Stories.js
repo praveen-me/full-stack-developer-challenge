@@ -96,13 +96,20 @@ class Stories extends Component {
     if(!auth.token) return <Redirect to='login'/>
 
     return (
-      <div>
-        <h2> Stories</h2>
-        <input type="text" onChange={this.handleQuery} value={query}/>
-        <select name="sort" onChange={this.handleSort} value={sort}>
-          <option value="default">Default</option>
-          <option value="date">Date</option>
-        </select>
+      <div className="container">
+        <h2 className="center"> Stories</h2>
+        <div className="filter-section">
+          <input 
+          type="text" 
+          onChange={this.handleQuery} 
+          value={query}
+          placeholder='search story'/>
+          <select name="sort" onChange={this.handleSort} value={sort}>
+            <option value="default">Default</option>
+            <option value="date">Date</option>
+          </select>
+        </div>
+        <div className="story-section">
         {
           isLoading ? <p>Loading...</p> : (
             displayStories && displayStories.map((story, i) => (
@@ -117,6 +124,7 @@ class Stories extends Component {
             ))
           )
         }
+        </div>
       </div>
     );
   }

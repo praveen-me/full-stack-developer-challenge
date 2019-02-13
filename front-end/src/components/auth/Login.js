@@ -50,11 +50,11 @@ class LogIn extends Component {
     return (
       isLoading ? <p>Loading...</p> : (
         <div className="container">
-          <h2>Log In</h2>
+          <h2 className="center">Log In</h2>
           <form className="auth-form" onSubmit={this.handleSubmit}>
-            <input type="text" name="username" placeholder="Enter your username" onChange={this.handleChange}/>
+            <input type="text" name="username" placeholder="Enter your username" onChange={this.handleChange}/><br />
             <input type="password" name="password" placeholder="Enter your password"
-            onChange={this.handleChange}/>
+            onChange={this.handleChange}/><br />
             <button type="submit" className="btn started-btn">Log In</button>
           </form>
         </div>
