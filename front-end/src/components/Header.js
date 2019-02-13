@@ -23,23 +23,23 @@ class Header extends Component {
     const {token} = this.props.auth;
 
     return (
-      <div>
-        <h1><Link to='/'>Inkredo Task</Link></h1>  
+      <header className="container">
+        <h1 className="logo"><Link to='/'>Inkredo Task</Link></h1>  
         {
           !token ? (
-            <>
-              <Link to="/login">Login</Link><br />
-              <Link to="/signup">Signup</Link>
-            </>
+            <div>
+              <Link to="/login" className="button">Login</Link><br />
+              <Link to="/signup" className="button">Signup</Link>
+            </div>
           ): (
-            <>
-              <Link to={`/profile/drafts/create`}>Create</Link><br />
-              <Link to={`/profile`}>Profile</Link>
+            <div>
+              <Link to={`/profile/drafts/create`}className="button">Create</Link><br />
+              <Link to={`/profile`} className="button">Profile</Link>
               <button onClick={this.handleLogout}>Log Out</button>
-            </>
+            </div>
           )
         }
-      </div>
+      </header>
     );
   }
 }

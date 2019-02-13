@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
-// import AuthButton from './AuthButton';
-// import { signUp } from '../../store/actions/authActions';
 import { connect } from 'react-redux';
 import authActions from '../../store/actions/authAction';
-// import Loader from '../project/Loader';
 
 
 class SignUp extends Component {
