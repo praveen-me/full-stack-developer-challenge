@@ -77,10 +77,7 @@ module.exports = {
           })
         })
       }
-      break;
-      case 'clap': {
-
-      } 
+      break; 
     }
   },
   upvoteStory: (req, res) => {
@@ -88,8 +85,7 @@ module.exports = {
     const {storyId} = req.params;
     Story.findOne({_id: storyId}, (err, story) => {
       const filteredArray = [...story.userClapped].filter(clappedId => clappedId == userId)
-      console.log(filteredArray)
-      if(filteredArray.length) {
+      if(filteredArray.length === 1) {
         Story.findOneAndUpdate({_id: storyId}, {$pull : {userClapped : userId}}, {new : true}, () => {} )
       }else {
         story.userClapped = [...story.userClapped, userId]

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Redirect, Link} from 'react-router-dom';
+import {Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
 import storyActions from '../store/actions/storyActions';
 
@@ -64,10 +64,18 @@ class Stories extends Component {
     const lastLogout = new Date(localStorage.getItem('lastLogoutTime')).getTime();
     const now = Date.now();
     
+    // sorting stories according to user unseen
     if(stories.length > 0) {
-      const topStories = stories.filter(story =>  new Date(story.date).getTime() > lastLogout && new Date(story.date).getTime() < now);
-      
-      const normalStories = stories.filter(story => !(new Date(story.date).getTime() > lastLogout && new Date(story.date).getTime() < now))
+      let topStories = []
+      let normalStories = []
+      for(let i = 0; i < stories.length; i++) {
+        const storyTime = new Date(stories[i]).getTime();
+        if( Number(storyTime) > Number(lastLogout) && Number(storyTime) < Number(now)) {
+          topStories.push(stories[i])
+        } else {
+          normalStories.push(stories[i])
+        }
+      }
 
       displayStories = [...topStories, ...normalStories];
     }
@@ -99,7 +107,7 @@ class Stories extends Component {
           isLoading ? <p>Loading...</p> : (
             displayStories && displayStories.map((story, i) => (
               <div key={story._id}>
-                {i+1}. <Link to="#">{story.description}</Link>
+                <p>{i+1}. {story.description}</p>
                 <p>user - {story.username} <br />  upvotes - {story.userClapped.length}</p>
                 <button onClick={(e) => this.handleClap(e, {
                   id: story._id,

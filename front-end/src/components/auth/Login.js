@@ -35,35 +35,22 @@ class LogIn extends Component {
     this.setState({
       isLoading : true
     })
-    if(navigator.onLine) {
-      this.props.dispatch(authActions.logIn(this.state.userInfo, (userStatus) => {
-        if(userStatus) {
-          this.setState({
-            isLoading : false,
-            msg : ''
-          })
-          this.props.history.push('/');
-        } 
-        // else if(isSucced.msg) {
-        //   this.setState({
-        //     isLoading: false,
-        //     msg: data.msg,
-        //   }); 
-        // }
-      }))
-    } else {
-      this.setState({
-        isLoading : false,
-        msg : "Please connected to a secure connection."        
-      })
-    }
+    this.props.dispatch(authActions.logIn(this.state.userInfo, (userStatus) => {
+      if(userStatus) {
+        this.setState({
+          isLoading : false,
+          msg : ''
+        })
+        this.props.history.push('/');
+      } 
+    }))
   }
   
   render() {
     const {msg, isLoading} = this.state;
-    // const {currentUser} = this.props;
-
-    // if(currentUser._id) return <Redirect to="/" />
+    const {auth} = this.props;
+    
+    if(auth.token) return <Redirect to='/'/>
 
     return (
       // isLoading ? <Loader/> : (
@@ -85,8 +72,9 @@ class LogIn extends Component {
 }
 
 function mapStateToProps(state) {
+  const {auth} = state;
   return {
-    currentUser : state.currentUser
+    auth,
   }
 }
 

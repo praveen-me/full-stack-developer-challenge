@@ -21,6 +21,8 @@ router.put('/stories/:storyId', story.upvoteStory);
 
 router.put('/users/:id/stories/:storyId', auth.isLoggedIn, story.updateStory);
 
+router.get('/isLoggedIn/:token', user.isLoggedIn);
+
 // waking up api's
 router.get('/wakeup', (req, res) => {
   res.send('ZZZZ.....')

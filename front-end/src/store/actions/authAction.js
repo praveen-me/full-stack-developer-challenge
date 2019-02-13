@@ -1,4 +1,4 @@
-import { SIGN_UP, LOG_IN, LOG_OUT } from "./types";
+import { SIGN_UP, LOG_IN, LOG_OUT, IS_LOGGED_IN } from "./types";
 
 const URI = 'http://localhost:3001/api';
 
@@ -57,6 +57,22 @@ const authActions = {
     return {
       type: LOG_OUT
     } 
+  },
+  isLoggedIn(token) {
+    return dispatch => {
+      fetch(`${URI}/isLoggedIn/${token}`)
+        .then(res => {
+          if(res.status === 200) {
+            res.json()
+              .then(userData => {
+                dispatch({
+                  type: LOG_IN,
+                  userData
+                })
+              })
+          }
+        })
+    }
   }
 };
 

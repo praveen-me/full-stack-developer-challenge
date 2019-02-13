@@ -45,17 +45,15 @@ module.exports = {
     })(req, res, next);
   },
   isLoggedIn: (req, res) => {
-    if (req.user) {
-      return User.findOne({ _id: req.user._id }, { password: 0 }, (err, data) => {
-        if (err) throw err;
-        return res.json({
-          data,
-        });
-      });
-    }
-    return res.status(401).json({
-      msg: 'Please login to get your details.',
-    });
+    const {token} = req.params;
+    
+    jsonwebtoken.verify(token, 'secret', (err, decoded) => {
+      if(err) throw err;
+      return res.status(200).json({
+        user: decoded._doc,
+        token
+      })
+    })
   },
   logout: (req, res) => {
     req.logOut();
