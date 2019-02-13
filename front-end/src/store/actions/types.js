@@ -13,3 +13,5 @@ export const GET_ALL_STORIES = 'GET_ALL_STORIES';
 export const EDIT_STORY = 'EDIT_STORY';
 
 export const PUBLISH_ARTICLE = 'PUBLISH_ARTICLE';
+
+export const CLAPPED_STORY = 'CLAPPED_STORY';

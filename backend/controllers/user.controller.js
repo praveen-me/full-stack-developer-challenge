@@ -1,5 +1,4 @@
 const passport = require('passport');
-const mongoose = require('mongoose');
 const User = require('./../models/User');
 const jsonwebtoken = require('jsonwebtoken');
 
@@ -16,7 +15,7 @@ module.exports = {
         return res.status(302).json({
           msg: 'username is not available',
         });
-      }
+    }
       newUser.save((err, data) => {
         if (err) {
           return res.json({

@@ -1,4 +1,4 @@
-import {CREATE_STORY, GET_USER_STORIES, DELETE_STORY, GET_ALL_STORIES, EDIT_STORY} from './types';
+import {CREATE_STORY, GET_USER_STORIES, DELETE_STORY, GET_ALL_STORIES, EDIT_STORY, CLAPPED_STORY} from './types';
 import store from './../store';
 const URI = 'http://localhost:3001/api';
 
@@ -67,7 +67,6 @@ const storyActions = {
         }
       })
   },
-  // jjkj
   getAllStories(cb) {
     return dispatch => {
       fetch(`${URI}/stories`, {
@@ -121,6 +120,24 @@ const storyActions = {
             })     
             cb(true)
           }
+        })
+    }
+  },
+  upvote({id, userId}, cb) {
+    console.log(id, userId, 'in actions')
+    return dispatch => {
+      fetch(`${URI}/stories/${id}?userClapped=${userId}`, {
+        method: 'PUT',
+        headers: {
+          'Authorization': `Bearer ${this.token()}`
+        }
+      })
+        .then(res => res.json())
+        .then(data => {
+          dispatch({
+            type: CLAPPED_STORY
+          })
+          cb(true)
         })
     }
   } 

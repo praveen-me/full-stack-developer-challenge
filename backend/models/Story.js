@@ -7,9 +7,7 @@ const storySchema = new mongoose.Schema({
   description: {type :String},
   published: {type: Boolean},
   date: { type: Date, default: new Date() },
-  userClapped: [{
-    userId: {type : ObjectId}
-  }],
+  userClapped: [{type : ObjectId}],
   username: {type : String},
 });
 

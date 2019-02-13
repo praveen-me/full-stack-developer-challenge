@@ -20,6 +20,27 @@ class Stories extends Component {
       }
     }))
   }
+
+  handleClap = (e, {id, userId}) => {
+    const {user} = this.props.auth;
+    if(user._id !== userId) {
+      this.setState({
+        isLoading: true
+      })
+      this.props.dispatch(storyActions.upvote({
+        id : id, 
+        userId: user._id
+      }, (clappedStatus) => {
+        this.props.dispatch(storyActions.getAllStories((storiesStatus) => {
+          if(storiesStatus) {
+            this.setState({
+              isLoading: false
+            })
+          }
+        }))
+      }))
+    }
+  }
   
   render() {
     const {auth, stories} = this.props;
@@ -35,8 +56,11 @@ class Stories extends Component {
             stories && stories.map((story, i) => (
               <div key={story._id}>
                 {i+1}. <Link to="#">{story.description}</Link>
-                <p>user - {story.username} claps - {story.userClapped.length}</p>
-                <p><button>Clap</button></p>
+                <p>user - {story.username} <br />  upvotes - {story.userClapped.length}</p>
+                <button onClick={(e) => this.handleClap(e, {
+                  id: story._id,
+                  userId: story.userId
+                })}>Upvote</button>
               </div>
             ))
           )
