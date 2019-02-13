@@ -1,4 +1,4 @@
-import { SIGN_UP, LOG_IN } from "../actions/types";
+import { SIGN_UP, LOG_IN, LOG_OUT } from "../actions/types";
 
 const initState = {
 };
@@ -13,6 +13,10 @@ export function authReducer(state = initState, action) {
         ...state,
         ...userData
       }
+    }
+
+    case LOG_OUT: {
+      return {}
     }
 
     default: return state;

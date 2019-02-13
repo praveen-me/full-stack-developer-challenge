@@ -1,4 +1,4 @@
-import { SIGN_UP, LOG_IN } from "./types";
+import { SIGN_UP, LOG_IN, LOG_OUT } from "./types";
 
 const URI = 'http://localhost:3001/api';
 
@@ -50,6 +50,12 @@ const authActions = {
           }
         })
     }
+  },
+  logOut() {
+    localStorage.removeItem('token');
+    return {
+      type: LOG_OUT
+    } 
   }
 };
 

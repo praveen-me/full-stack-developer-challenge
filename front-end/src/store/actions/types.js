@@ -15,3 +15,5 @@ export const EDIT_STORY = 'EDIT_STORY';
 export const PUBLISH_ARTICLE = 'PUBLISH_ARTICLE';
 
 export const CLAPPED_STORY = 'CLAPPED_STORY';
+
+export const LOG_OUT = 'LOG_OUT';

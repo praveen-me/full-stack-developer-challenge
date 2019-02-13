@@ -3,11 +3,18 @@
 import React, { Component } from 'react';
 import {Link} from 'react-router-dom';
 import {connect} from 'react-redux';
+import { timingSafeEqual } from 'crypto';
+import authActions from '../store/actions/authAction';
 
 class Header extends Component {
+  
+  handleLogout = e => {
+    this.props.dispatch(authActions.logOut())
+  }
+  
   render() {
     const {token} = this.props.auth;
-    
+  
     return (
       <div>
         <h1><Link to='/'>Inkredo Task</Link></h1>  
@@ -21,6 +28,7 @@ class Header extends Component {
             <>
               <Link to={`/profile/drafts/create`}>Create</Link><br />
               <Link to={`/profile`}>Profile</Link>
+              <button onClick={this.handleLogout}>Log Out</button>
             </>
           )
         }
