@@ -7,7 +7,8 @@ class Stories extends Component {
   constructor(props) {
     super(props);
     this.state= {
-      isLoading: true
+      isLoading: true,
+      query: ''
     }
   }
 
@@ -41,19 +42,46 @@ class Stories extends Component {
       }))
     }
   }
+
+  handleQuery = e => {
+    this.setState({
+      query: e.target.value
+    })
+  }
   
   render() {
     const {auth, stories} = this.props;
-    const {isLoading} = this.state;
-    console.log(stories)
+    const {isLoading, query} = this.state;
+    let displayStories = [];
+    
+    const lastLogout = new Date(localStorage.getItem('lastLogoutTime')).getTime();
+    const now = Date.now();
+    
+    if(stories.length > 0) {
+      const topStories = stories.filter(story =>  new Date(story.date).getTime() > lastLogout && new Date(story.date).getTime() < now);
+      
+      const normalStories = stories.filter(story => !(new Date(story.date).getTime() > lastLogout && new Date(story.date).getTime() < now))
+
+      displayStories = [...topStories, ...normalStories];
+    }
+
+    if(query) {
+      const regexp = new RegExp(query, 'i')
+      displayStories = displayStories.filter(story => regexp.test(story.description)); 
+    } else {
+      displayStories = stories
+    }
+
+
     if(!auth.token) return <Redirect to='login'/>
 
     return (
       <div>
         <h2> Stories</h2>
+        <input type="text" onChange={this.handleQuery} value={query}/>
         {
           isLoading ? <p>Loading...</p> : (
-            stories && stories.map((story, i) => (
+            displayStories && displayStories.map((story, i) => (
               <div key={story._id}>
                 {i+1}. <Link to="#">{story.description}</Link>
                 <p>user - {story.username} <br />  upvotes - {story.userClapped.length}</p>

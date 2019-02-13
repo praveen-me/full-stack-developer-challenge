@@ -53,6 +53,7 @@ const authActions = {
   },
   logOut() {
     localStorage.removeItem('token');
+    localStorage.setItem('lastLogoutTime', new Date())
     return {
       type: LOG_OUT
     } 
