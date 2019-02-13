@@ -8,7 +8,8 @@ class Stories extends Component {
     super(props);
     this.state= {
       isLoading: true,
-      query: ''
+      query: '',
+      sort: 'default'
     }
   }
 
@@ -48,10 +49,16 @@ class Stories extends Component {
       query: e.target.value
     })
   }
+
+  handleSort = e => {
+    this.setState({
+      sort: e.target.value
+    })
+  }
   
   render() {
     const {auth, stories} = this.props;
-    const {isLoading, query} = this.state;
+    const {isLoading, query, sort} = this.state;
     let displayStories = [];
     
     const lastLogout = new Date(localStorage.getItem('lastLogoutTime')).getTime();
@@ -72,6 +79,11 @@ class Stories extends Component {
       displayStories = stories
     }
 
+    if(sort === 'date') {
+      displayStories = [...displayStories].sort((a,b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    } else {
+      displayStories = [...displayStories]
+    }
 
     if(!auth.token) return <Redirect to='login'/>
 
@@ -79,6 +91,10 @@ class Stories extends Component {
       <div>
         <h2> Stories</h2>
         <input type="text" onChange={this.handleQuery} value={query}/>
+        <select name="sort" onChange={this.handleSort} value={sort}>
+          <option value="default">Default</option>
+          <option value="date">Date</option>
+        </select>
         {
           isLoading ? <p>Loading...</p> : (
             displayStories && displayStories.map((story, i) => (
