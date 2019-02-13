@@ -74,18 +74,18 @@ class CreateStory extends Component {
     if(!token) return <Redirect to="/login"/>
 
     return (
-      <div>
-        <h1>{mode === 'add' ? 'Add Story' : 'Edit Story'}</h1>
-        <form onSubmit={this.handleSubmit}>
-          <input 
+      <div className="container">
+        <h3 className="center">{mode === 'add' ? 'Add Story' : 'Edit Story'}</h3>
+        <form onSubmit={this.handleSubmit} className="center">
+          <textarea 
           value={description}
-          onChange={this.handleChange}/>
+          onChange={this.handleChange}/><br />
           {
             mode === 'add' ? (
               <>
                 <button type="submit" onClick={(e) => this.handleSubmit(e, {
                   published : false
-                })}>Add to Drafts</button>
+                })}>Add to Drafts</button><br />
                 <button type="submit" onClick={(e) => this.handleSubmit(e, {
                   published : true
                 })}>Add to Stories</button>

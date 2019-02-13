@@ -67,8 +67,8 @@ class Profile extends Component {
     if(!auth.token) return <Redirect to="/login"/>
 
     return (
-      <div>
-        <h1>{auth.user.username}</h1>
+      <div className="container">
+        <h2 className="center">{auth.user.username}</h2>
         <h3>Published</h3>
         {
           isLoading ? <p>Loading...</p> : (
